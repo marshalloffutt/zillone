@@ -17,6 +17,7 @@ class Mavbar extends React.Component {
   };
 
   render() {
+    const { isAuthed, logoutClicky } = this.props;
     return (
       <div className="mavbar">
         <Navbar color="light" light expand="md">
@@ -25,7 +26,7 @@ class Mavbar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Logout</NavLink>
+                { isAuthed ? <NavLink onClick={logoutClicky}>Logout</NavLink> : '' }
               </NavItem>
             </Nav>
           </Collapse>
