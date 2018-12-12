@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
-import logo from './logo.svg';
+
+import connection from '../helpers/data/connection';
+
+import Auth from '../components/Auth/Auth';
+import Listings from '../components/Listings/Listings';
+import Mavbar from '../components/Mavbar/Mavbar';
+
 import './App.scss';
+import authRequests from '../helpers/data/authRequests';
 
 class App extends Component {
+  state = {
+    authed: false,
+  }
+
+  componentDidMount() {
+    connection();
+  }
+
+  isAuthenticated = () => {
+    this.setState({ authed: true });
+  }
+
   render() {
-    console.log(this);
+    const logoutClicky = () => {
+      authRequests.logoutUser();
+      this.setState({ authed: false });
+    };
+    if (!this.state.authed) {
+      return (
+        <div className="App">
+          <Mavbar isAuthed={this.state.authed} logoutClicky={logoutClicky}/>
+          <Auth isAuthenticated={this.isAuthenticated}/>
+        </div>
+      );
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <button className="btn btn-danger">HELP</button>
-          <Button
-            tag="a"
-            color="info"
-            size="large"
-            href="http://google.com"
-            target="_blank"
-          >Reactstrap</Button>
-        </header>
+        <Mavbar isAuthed={this.state.authed} logoutClicky={logoutClicky}/>
+        <Listings />
       </div>
     );
   }
