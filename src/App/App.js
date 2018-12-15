@@ -23,7 +23,6 @@ class App extends Component {
 
   componentDidMount() {
     connection();
-
     listingRequests.getRequest()
       .then((listings) => {
         this.setState({ listings });
