@@ -50,6 +50,17 @@ class App extends Component {
     this.setState({ authed: true });
   }
 
+  deleteOne = (listingId) => {
+    listingRequests.deleteListingAxios(listingId)
+      .then(() => {
+        listingRequests.getRequest()
+          .then((listings) => {
+            this.setState({ listings });
+          });
+      })
+      .catch(err => console.error('error with delete single', err));
+  }
+
   render() {
     const logoutClicky = () => {
       authRequests.logoutUser();
@@ -69,7 +80,10 @@ class App extends Component {
       <div className="App">
         <Mavbar isAuthed={this.state.authed} logoutClicky={logoutClicky}/>
         <div className="row">
-          <Listings listings={this.state.listings}/>
+          <Listings
+            listings={this.state.listings}
+            deleteSingleListing={this.deleteOne}
+          />
           <Building />
         </div>
         <div className="row">
