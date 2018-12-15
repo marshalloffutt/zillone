@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Collapse,
   Navbar,
@@ -12,6 +13,11 @@ import {
 import './Mavbar.scss';
 
 class Mavbar extends React.Component {
+  static propTypes = {
+    isAuthed: PropTypes.bool,
+    logoutClicky: PropTypes.func,
+  };
+
   state = {
     isOpen: false,
   };
