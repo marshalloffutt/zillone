@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import connection from '../helpers/data/connection';
@@ -7,8 +7,10 @@ import connection from '../helpers/data/connection';
 import Auth from '../components/Auth/Auth';
 import Listings from '../components/Listings/Listings';
 import Building from '../components/Building/Building';
-import ListingsForm from '../components/ListingsForm/ListingsForm';
+import ListingForm from '../components/ListingForm/ListingForm';
 import Mavbar from '../components/Mavbar/Mavbar';
+
+import listingRequests from '../helpers/data/listingRequests';
 
 import './App.scss';
 import authRequests from '../helpers/data/authRequests';
@@ -16,10 +18,18 @@ import authRequests from '../helpers/data/authRequests';
 class App extends Component {
   state = {
     authed: false,
+    listings: [],
   }
 
   componentDidMount() {
     connection();
+
+    listingRequests.getRequest()
+      .then((listings) => {
+        this.setState({ listings });
+      })
+      .catch(err => console.error('error with listing GET', err));
+
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
@@ -60,11 +70,11 @@ class App extends Component {
       <div className="App">
         <Mavbar isAuthed={this.state.authed} logoutClicky={logoutClicky}/>
         <div className="row">
-          <Listings />
+          <Listings listings={this.state.listings}/>
           <Building />
         </div>
         <div className="row">
-          <ListingsForm />
+          <ListingForm />
         </div>
       </div>
     );
