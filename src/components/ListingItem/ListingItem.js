@@ -11,6 +11,7 @@ class ListingItem extends React.Component {
   static propTypes = {
     listing: listingShape,
     deleteSingleListing: PropTypes.func,
+    passListingToEdit: PropTypes.func,
   }
 
   deleteEvent = (e) => {
