@@ -4,7 +4,7 @@
 This was an in-class code along exercise where we created a single-page Zillow clone. This app serves as our introduction to React, implementing CRUD methods to interact with Firebase. When the page loads the user is able to see listings for houses. When the user clicks on a listing they will see a view of the location they clicked on. There is also a form component where the user can add a new listing. User can also delete or edit listings associated with their unique identifier.
 
 ## Screenshots
-![mainview](./images/pic1.png)
+![mainview](/images/pic1.png)
 
 ## Available Scripts
 
